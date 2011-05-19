@@ -1,0 +1,5 @@
+primesense-kinect-sensor (5.0.1.32-1) UNRELEASED; urgency=low
+
+  * Initial release (Closes: #XXXXXX)
+
+ -- Cosimo Alfarano <kalfa@debian.org>  Wed, 10 Nov 2010 15:40:08 -0500

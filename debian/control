@@ -1,0 +1,21 @@
+Source: primesense-kinect-sensor
+Priority: optional
+Section: libdevel
+Maintainer: Cosimo Alfarano <kalfa@debian.org>
+Build-Depends: debhelper (>= 7.0.50~),
+               python,
+               libopenni-unstable-dev (>= 1.1.0.41)
+Standards-Version: 3.9.1
+Homepage: http://www.openni.org
+
+Package: openni-sensor-primesense-kinect
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libopenni-unstable (>= 1.1.0.41)
+Description: sensor modules for Microsoft Kinecet for the OpenNI framework
+ Sensors for OpenNI framework to use the Microsoft Kinect device.
+ .
+ This module is an unofficial branch of PrimeSense Sensors patched for Kinect
+ support.
