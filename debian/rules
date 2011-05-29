@@ -15,7 +15,7 @@ logdir = /var/log/primesense/XnSensorServer
 usbruledir = /lib/udev/rules.d
 
 %:
-	dh --with quilt $@ --buildsystem=makefile
+	dh $@ --buildsystem=makefile
 
 override_dh_auto_build:
 	cd Platform/Linux-x86/CreateRedist && ./RedistMaker
