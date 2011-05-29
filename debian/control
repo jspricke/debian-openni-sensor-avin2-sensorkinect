@@ -7,7 +7,7 @@ Uploaders: Cosimo Alfarano <kalfa@debian.org>,
            Hans-Christoph Steiner <hans@eds.org>
 Build-Depends: debhelper (>= 7.0.50~),
                python,
-               libopenni-unstable-dev (>= 1.1.0.41)
+               libopenni-dev (>= 1.1.0.41)
 Standards-Version: 3.9.1
 Homepage: http://www.openni.org
 
@@ -16,7 +16,7 @@ Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libopenni-unstable (>= 1.1.0.41)
+         libopenni (>= 1.1.0.41)
 Description:  Microsoft Kinect sensor modules for the OpenNI framework
  OpenNI is a framework for getting data to support 'Natural Interaction',
  i.e. skeleton tracking, gesture tracking, and similar ways of getting data
