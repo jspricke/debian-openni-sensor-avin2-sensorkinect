@@ -1,7 +1,10 @@
 Source: primesense-kinect-sensor
 Priority: optional
 Section: libdevel
-Maintainer: Cosimo Alfarano <kalfa@debian.org>
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+DM-Upload-Allowed: yes
+Uploaders: Cosimo Alfarano <kalfa@debian.org>,
+           Hans-Christoph Steiner <hans@eds.org>
 Build-Depends: debhelper (>= 7.0.50~),
                python,
                libopenni-unstable-dev (>= 1.1.0.41)
