@@ -17,8 +17,12 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libopenni-unstable (>= 1.1.0.41)
-Description: sensor modules for Microsoft Kinecet for the OpenNI framework
- Sensors for OpenNI framework to use the Microsoft Kinect device.
+Description:  Microsoft Kinect sensor modules for the OpenNI framework
+ OpenNI is a framework for getting data to support 'Natural Interaction',
+ i.e. skeleton tracking, gesture tracking, and similar ways of getting data
+ from humans. This package provides modules for OpenNI that get the data from
+ the Kinect camera for processing with the OpenNI Middleware, like PrimeSense
+ NITE.
  .
- This module is an unofficial branch of PrimeSense Sensors patched for Kinect
- support.
+ This module is an unofficial 'avin2' branch of PrimeSense Sensors patched for
+ Kinect support.
