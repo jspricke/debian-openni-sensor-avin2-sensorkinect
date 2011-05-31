@@ -3,7 +3,7 @@
 set -e
 
 MODULE_DIR="/usr/lib/"
-MODULES="libXnDeviceSensorV2.so libXnDeviceFile.so"
+MODULES="libXnDeviceSensorV2KM.so libXnDeviceFile.so"
 
 if [ "$1" = "configure" ]; then
 	for module in $MODULES; do
