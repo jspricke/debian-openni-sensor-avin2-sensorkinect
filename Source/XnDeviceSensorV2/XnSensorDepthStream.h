@@ -29,7 +29,6 @@
 #include "XnDeviceSensorProtocol.h"
 #include "Registration.h"
 #include "XnSensorStreamHelper.h"
-#include "XnSharedMemoryBufferPool.h"
 
 
 //---------------------------------------------------------------------------
@@ -47,6 +46,8 @@
 #define XN_DEPTH_STREAM_DEFAULT_WHITE_BALANCE				TRUE
 #define XN_DEPTH_STREAM_DEFAULT_GAIN_OLD					50
 #define XN_DEPTH_STREAM_DEFAULT_GMC_MODE					TRUE
+#define XN_DEPTH_STREAM_DEFAULT_CLOSE_RANGE					FALSE
+#define XN_DEPTH_STREAM_DEFAULT_SHIFT_MAP_APPENDED			TRUE
 
 
 //---------------------------------------------------------------------------
@@ -55,7 +56,7 @@
 class XnSensorDepthStream : public XnDepthStream, public IXnSensorStream
 {
 public:
-	XnSensorDepthStream(const XnChar* strDeviceName, const XnChar* strName, XnSensorObjects* pObjects, XnUInt32 nBufferCount, XnBool bAllowOtherUsers);
+	XnSensorDepthStream(const XnChar* strName, XnSensorObjects* pObjects);
 	~XnSensorDepthStream() { Free(); }
 
 	//---------------------------------------------------------------------------
@@ -78,6 +79,7 @@ protected:
 	XnStatus Open() { return m_Helper.Open(); }
 	XnStatus Close() { return m_Helper.Close(); }
 	XnStatus PostProcessFrame(XnStreamData* pFrameData);
+	XnStatus CalcRequiredSize(XnUInt32* pnRequiredSize) const;
 	XnStatus ReallocTripleFrameBuffer();
 	XnStatus CropImpl(XnStreamData* pStreamOutput, const XnCropping* pCropping);
 	XnStatus Mirror(XnStreamData* pStreamOutput) const;
@@ -88,7 +90,6 @@ protected:
 	XnStatus MapPropertiesToFirmware();
 	void GetFirmwareStreamConfig(XnResolutions* pnRes, XnUInt32* pnFPS) { *pnRes = GetResolution(); *pnFPS = GetFPS(); }
 	XnStatus WriteImpl(XnStreamData* /*pStreamData*/) { return XN_STATUS_DEVICE_UNSUPPORTED_MODE; }
-	XnSharedMemoryBufferPool* GetSharedMemoryBuffer() { return &m_BufferPool; }
 
 
 protected:
@@ -110,6 +111,7 @@ protected:
 	XnStatus SetCropping(const XnCropping* pCropping);
 	XnStatus SetActualRead(XnBool bRead);
 	virtual XnStatus SetGMCMode(XnBool bGMCMode);
+	virtual XnStatus SetCloseRange(XnBool bCloseRange);
 
 
 private:
@@ -130,15 +132,14 @@ private:
 	static XnStatus XN_CALLBACK_TYPE DecidePixelSizeFactorCallback(const XnProperty* pSender, void* pCookie);
 	static XnStatus XN_CALLBACK_TYPE ReadAGCBinsFromFile(XnGeneralProperty* pSender, const XnChar* csINIFile, const XnChar* csSection);
 	static XnStatus XN_CALLBACK_TYPE SetGMCModeCallback(XnActualIntProperty* pSender, XnUInt64 nValue, void* pCookie);
+	static XnStatus XN_CALLBACK_TYPE SetCloseRangeCallback(XnActualIntProperty* pSender, XnUInt64 nValue, void* pCookie);
+	static XnStatus XN_CALLBACK_TYPE GetShiftsMapCallback(const XnGeneralProperty* pSender, const XnGeneralBuffer& gbValue, void* pCookie);
 
 
 	//---------------------------------------------------------------------------
 	// Members
 	//---------------------------------------------------------------------------
 	XnSensorStreamHelper m_Helper;
-	XnSharedMemoryBufferPool m_BufferPool;
-
-	XnActualStringProperty m_SharedBufferName;
 	XnActualIntProperty m_InputFormat;
 	XnActualIntProperty m_DepthRegistration;
 	XnActualIntProperty m_HoleFilter;
@@ -158,6 +159,9 @@ private:
 
 	XnActualIntProperty m_ActualRead;
 	XnActualIntProperty m_GMCMode;
+	XnActualIntProperty m_CloseRange;
+	XnGeneralProperty m_ShiftsMap;
+	const XnUInt16* m_pLastFrameShiftsMap;
 
 
 	XnRegistration m_Registration;
