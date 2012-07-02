@@ -159,14 +159,14 @@ XnStatus XnHostProtocolInitFWParams(XnDevicePrivateData* pDevicePrivateData, XnU
 	pDevicePrivateData->FWInfo.nOpcodeGetPlatformString = OPCODE_INVALID;
 	pDevicePrivateData->FWInfo.nOpcodeGetUsbCore = OPCODE_GET_USB_CORE_TYPE;
 
-
-	pDevicePrivateData->FWInfo.nUSBDelayReceive = 100;
-	pDevicePrivateData->FWInfo.nUSBDelayExecutePreSend = 1;
-	pDevicePrivateData->FWInfo.nUSBDelayExecutePostSend = 10;
-	pDevicePrivateData->FWInfo.nUSBDelaySoftReset = 800;
-	pDevicePrivateData->FWInfo.nUSBDelaySetParamFlicker = 3000;
+	// --avin mod--
+	pDevicePrivateData->FWInfo.nUSBDelayReceive = 1;
+	pDevicePrivateData->FWInfo.nUSBDelayExecutePreSend = 0;
+	pDevicePrivateData->FWInfo.nUSBDelayExecutePostSend = 0;
+	pDevicePrivateData->FWInfo.nUSBDelaySoftReset = 1;
+	pDevicePrivateData->FWInfo.nUSBDelaySetParamFlicker = 300;
 	pDevicePrivateData->FWInfo.nUSBDelaySetParamStream0Mode = 1;
-	pDevicePrivateData->FWInfo.nUSBDelaySetParamStream1Mode = 300;
+	pDevicePrivateData->FWInfo.nUSBDelaySetParamStream1Mode = 1;
 	pDevicePrivateData->FWInfo.nUSBDelaySetParamStream2Mode = 1;
 
 	pDevicePrivateData->FWInfo.bGetImageCmosTypeSupported = FALSE;

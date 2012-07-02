@@ -48,6 +48,7 @@ typedef enum
 XnUInt16 XnSensorIO::ms_supportedProducts[] = 
 {
 	0x02AE,
+	0x02BF,
 };
 
 XnUInt32 XnSensorIO::ms_supportedProductsCount = sizeof(XnSensorIO::ms_supportedProducts) / sizeof(XnSensorIO::ms_supportedProducts[0]);
@@ -141,6 +142,8 @@ XnStatus XnSensorIO::OpenDataEndPoints(XnSensorUsbInterface nInterface, const Xn
 {
 	XnStatus nRetVal = XN_STATUS_OK;
 
+// --avin mod--
+/*
 	// try to set requested interface
 	if (nInterface != XN_SENSOR_USB_INTERFACE_DEFAULT)
 	{
@@ -158,13 +161,12 @@ XnStatus XnSensorIO::OpenDataEndPoints(XnSensorUsbInterface nInterface, const Xn
 			XN_ASSERT(FALSE);
 			XN_LOG_WARNING_RETURN(XN_STATUS_USB_INTERFACE_NOT_SUPPORTED, XN_MASK_DEVICE_IO, "Unknown interface type: %d", nInterface);
 		}
-// --avin mod--
-/*
+
 		xnLogVerbose(XN_MASK_DEVICE_IO, "Setting USB alternative interface to %d...", nAlternativeInterface);
 		nRetVal = xnUSBSetInterface(m_pSensorHandle->USBDevice, 0, nAlternativeInterface);
 		XN_IS_STATUS_OK(nRetVal);
-*/
 	}
+*/
 
 	xnLogVerbose(XN_MASK_DEVICE_IO, "Opening endpoints...");
 
@@ -174,39 +176,24 @@ XnStatus XnSensorIO::OpenDataEndPoints(XnSensorUsbInterface nInterface, const Xn
 	XnBool bNewUSB = TRUE;
 
 	// Depth
-	m_pSensorHandle->DepthConnection.bIsISO = FALSE;
+
+	// --avin mod--
+	m_pSensorHandle->DepthConnection.bIsISO = TRUE;
+	bNewUSB = TRUE;
 
 	xnLogVerbose(XN_MASK_DEVICE_IO, "Opening endpoint 0x81 for depth...");
-	nRetVal = xnUSBOpenEndPoint(m_pSensorHandle->USBDevice, 0x81, XN_USB_EP_BULK, XN_USB_DIRECTION_IN, &m_pSensorHandle->DepthConnection.UsbEp);
+	nRetVal = xnUSBOpenEndPoint(m_pSensorHandle->USBDevice, 0x81, XN_USB_EP_ISOCHRONOUS, XN_USB_DIRECTION_IN, &m_pSensorHandle->DepthConnection.UsbEp);
 	if (nRetVal == XN_STATUS_USB_ENDPOINT_NOT_FOUND)
 	{
-		bNewUSB = FALSE;
-		xnLogVerbose(XN_MASK_DEVICE_IO, "Endpoint 0x81 does not exist. Trying old USB: Opening 0x82 for depth...");
-		nRetVal = xnUSBOpenEndPoint(m_pSensorHandle->USBDevice, 0x82, XN_USB_EP_BULK, XN_USB_DIRECTION_IN, &m_pSensorHandle->DepthConnection.UsbEp);
-		XN_IS_STATUS_OK(nRetVal);
-	}
-	else
-	{
-		if (nRetVal == XN_STATUS_USB_WRONG_ENDPOINT_TYPE)
-		{
-			nRetVal = xnUSBOpenEndPoint(m_pSensorHandle->USBDevice, 0x81, XN_USB_EP_ISOCHRONOUS, XN_USB_DIRECTION_IN, &m_pSensorHandle->DepthConnection.UsbEp);
-
-			m_pSensorHandle->DepthConnection.bIsISO = TRUE;
-		}
-
-		bNewUSB = TRUE;
-
+		nRetVal = xnUSBSetInterface(m_pSensorHandle->USBDevice, 0, 1);
 		XN_IS_STATUS_OK(nRetVal);
 
-		if (m_pSensorHandle->DepthConnection.bIsISO  == TRUE)
-		{
-			xnLogVerbose(XN_MASK_DEVICE_IO, "Depth endpoint is isochronous.");
-		}
-		else
-		{
-			xnLogVerbose(XN_MASK_DEVICE_IO, "Depth endpoint is bulk.");
-		}
+		nRetVal = xnUSBOpenEndPoint(m_pSensorHandle->USBDevice, 0x81, XN_USB_EP_ISOCHRONOUS, XN_USB_DIRECTION_IN, &m_pSensorHandle->DepthConnection.UsbEp);
+		XN_IS_STATUS_OK(nRetVal);
 	}
+
+	xnLogVerbose(XN_MASK_DEVICE_IO, "Depth endpoint is isochronous.");
+
 	m_pSensorHandle->DepthConnection.bIsOpen = TRUE;
 
 	nRetVal = xnUSBGetEndPointMaxPacketSize(m_pSensorHandle->DepthConnection.UsbEp, &m_pSensorHandle->DepthConnection.nMaxPacketSize);

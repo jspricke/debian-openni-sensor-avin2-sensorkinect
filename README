@@ -9,6 +9,9 @@ You must use this kinect mod version with the unstable OpenNI release which is a
 http://www.openni.org/Downloads/OpenNIModules.aspx
 
 Changes:
+v0.93:
+	1) Added preliminary support for the Kinect4Windows sensor.
+
 v0.92:
 	1) Updated codebase to the latest OpenNI / Sensor version (1.5.4.0 / 5.1.2.1)
 
@@ -82,7 +85,8 @@ TIPs:
 	
 Todo:
 	1) Add motor & led control.
-	2) Add support for the K4W device.
+	2) Add windows 8 support - it's not working at the moment due to manually modified INF files.
+	3) Fix kinect4windows on Linux/MacOSX - it's very unstable.
 
 The source code for this version is available at:
 https://github.com/avin2/SensorKinect	
