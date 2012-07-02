@@ -1,4 +1,4 @@
-Source: primesense-kinect-sensor
+Source: openni-sensor-avin2-sensorkinect
 Priority: optional
 Section: libdevel
 Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>

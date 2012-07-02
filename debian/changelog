@@ -1,4 +1,4 @@
-primesense-kinect-sensor (5.0.1.32-1) UNRELEASED; urgency=low
+openni-sensor-avin2-sensorkinect (0.93-1) UNRELEASED; urgency=low
 
   * Initial release (Closes: #628445)
 

@@ -1,5 +1,5 @@
 Fix:
-E: primesense-kinect-sensor source: missing-build-dependency quilt
+E: openni-sensor-avin2-sensorkinect source: missing-build-dependency quilt
 E: openni-sensor-primesense-kinect: embedded-library usr/lib/libXnFormats.so: libjpeg
 W: openni-sensor-primesense-kinect: new-package-should-close-itp-bug
 W: openni-sensor-primesense-kinect: wrong-bug-number-in-closes l3:#XXXXXX
