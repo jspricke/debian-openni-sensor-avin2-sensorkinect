@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-PACKAGE = openni-sensor-primesense-kinect
+PACKAGE = openni-sensor-avin2-sensorkinect
 
 COMPILED_BASE = $(CURDIR)/Platform/Linux-x86/Redist
 SENSOR_BASE = $(CURDIR)/debian/$(PACKAGE)
