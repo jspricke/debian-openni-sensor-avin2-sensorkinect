@@ -27,7 +27,6 @@
 //---------------------------------------------------------------------------
 #include <XnDDK/XnImageStream.h>
 #include "XnSensorStreamHelper.h"
-#include "XnSharedMemoryBufferPool.h"
 
 //---------------------------------------------------------------------------
 // Defines
@@ -60,7 +59,7 @@
 class XnSensorImageStream : public XnImageStream, public IXnSensorStream
 {
 public:
-	XnSensorImageStream(const XnChar* strDeviceName, const XnChar* StreamName, XnSensorObjects* pObjects, XnUInt32 nBufferCount, XnBool bAllowOtherUsers);
+	XnSensorImageStream(const XnChar* StreamName, XnSensorObjects* pObjects);
 	~XnSensorImageStream() { Free(); }
 
 	//---------------------------------------------------------------------------
@@ -95,7 +94,6 @@ protected:
 	XnStatus MapPropertiesToFirmware();
 	void GetFirmwareStreamConfig(XnResolutions* pnRes, XnUInt32* pnFPS) { *pnRes = GetResolution(); *pnFPS = GetFPS(); }
 	XnStatus WriteImpl(XnStreamData* /*pStreamData*/) { return XN_STATUS_DEVICE_UNSUPPORTED_MODE; }
-	XnSharedMemoryBufferPool* GetSharedMemoryBuffer() { return &m_BufferPool; }
 
 	//---------------------------------------------------------------------------
 	// Setters
@@ -118,7 +116,6 @@ protected:
 
 private:
 	XnStatus ValidateMode();
-	static XnUInt32 GetMaxBufferSize(XnFWVer version);
 
 	static XnStatus XN_CALLBACK_TYPE SetInputFormatCallback(XnActualIntProperty* pSender, XnUInt64 nValue, void* pCookie);
 	static XnStatus XN_CALLBACK_TYPE SetAntiFlickerCallback(XnActualIntProperty* pSender, XnUInt64 nValue, void* pCookie);
@@ -135,9 +132,6 @@ private:
 	// Members
 	//---------------------------------------------------------------------------
 	XnSensorStreamHelper m_Helper;
-	XnSharedMemoryBufferPool m_BufferPool;
-
-	XnActualStringProperty m_SharedBufferName;
 	XnActualIntProperty m_InputFormat;
 	XnActualIntProperty m_AntiFlicker;
 	XnActualIntProperty m_ImageQuality;
