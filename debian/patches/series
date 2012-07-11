@@ -3,3 +3,4 @@
 0003-Add-support-for-Primesense-devices.patch
 0004-Don-t-write-log-file-upon-OpenNI-invocation.patch
 0005-Test-for-y-value-in-registration.patch
+0006-Add-SONAME-to-libraries.patch

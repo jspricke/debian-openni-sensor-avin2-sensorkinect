@@ -13,12 +13,12 @@ Homepage: http://www.openni.org
 Vcs-Git: git://git.debian.org/pkg-multimedia/openni-sensor-avin2-sensorkinect.git
 Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/openni-sensor-avin2-sensorkinect.git
 
-Package: openni-sensor-avin2-sensorkinect
-Section: libdevel
+Package: openni-sensor-avin2-sensorkinect0
+Section: libs
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libopenni (>= 1.1.0.41)
+         openni-utils
 Description:  Microsoft Kinect sensor modules for the OpenNI framework
  OpenNI is a framework for getting data to support 'Natural Interaction',
  i.e. skeleton tracking, gesture tracking, and similar ways of getting data
@@ -28,3 +28,34 @@ Description:  Microsoft Kinect sensor modules for the OpenNI framework
  .
  This module is an unofficial 'avin2' branch of PrimeSense Sensors patched for
  Kinect support.
+
+Package: openni-sensor-avin2-sensorkinect-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         openni-sensor-avin2-sensorkinect0 (= ${binary:Version})
+Description:  Microsoft Kinect sensor modules for the OpenNI framework
+ OpenNI is a framework for getting data to support 'Natural Interaction',
+ i.e. skeleton tracking, gesture tracking, and similar ways of getting data
+ from humans. This package provides modules for OpenNI that get the data from
+ the Kinect camera for processing with the OpenNI Middleware, like PrimeSense
+ NITE.
+ .
+ This module is an unofficial 'avin2' branch of PrimeSense Sensors patched for
+ Kinect support.
+
+Package: openni-sensor-avin2-sensorkinect-bin
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description:  Microsoft Kinect sensor modules for the OpenNI framework
+ OpenNI is a framework for getting data to support 'Natural Interaction',
+ i.e. skeleton tracking, gesture tracking, and similar ways of getting data
+ from humans. This package provides modules for OpenNI that get the data from
+ the Kinect camera for processing with the OpenNI Middleware, like PrimeSense
+ NITE.
+ .
+ This module is an unofficial 'avin2' branch of PrimeSense Sensors patched for
+ Kinect support. This package provides the XnSensorServer tool.

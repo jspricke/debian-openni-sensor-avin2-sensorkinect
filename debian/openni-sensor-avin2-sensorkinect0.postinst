@@ -3,11 +3,11 @@
 set -e
 
 MODULE_DIR="/usr/lib/"
-MODULES="libXnDeviceSensorV2KM.so libXnDeviceFile.so"
+MODULES="libXnDeviceSensorV2KM.so.0 libXnDeviceFile.so.0"
 
 if [ "$1" = "configure" ]; then
 	for module in $MODULES; do
-		niReg -r $MODULE_DIR/$module /etc/primesense
+		niReg -r $MODULE_DIR/$module /etc/openni
 	done
 fi
 
