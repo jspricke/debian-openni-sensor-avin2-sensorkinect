@@ -1,2 +1,3 @@
 0001-Don-t-build-in-parallel-because-not-all-dependencies.patch
 0002-Disable-SSE.patch
+0003-Add-support-for-Primesense-devices.patch
