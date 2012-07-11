@@ -1,43 +1,19 @@
 #!/usr/bin/make -f
 
-PACKAGE = openni-sensor-avin2-sensorkinect
-
-COMPILED_BASE = $(CURDIR)/Platform/Linux-x86/Redist
-SENSOR_BASE = $(CURDIR)/debian/$(PACKAGE)
-
-prefix = /usr
-bindir = $(prefix)/bin
-libdir = $(prefix)/lib
-includedir = $(prefix)/include
-docdir = $(prefix)/share/doc
-etcdir = /etc/primesense
-logdir = /var/log/primesense/XnSensorServer
-usbruledir = /lib/udev/rules.d
-
 %:
 	dh $@ --buildsystem=makefile
 
 override_dh_auto_build:
-	cd Platform/Linux-x86/CreateRedist && ./RedistMaker
+	cd Platform/Linux/CreateRedist && ./RedistMaker
 
-override_dh_auto_install:
-	install -d $(SENSOR_BASE)/$(etcdir)
-	install -p $(COMPILED_BASE)/Config/*.ini $(SENSOR_BASE)/$(etcdir)
-	chmod a-wx $(SENSOR_BASE)/$(etcdir)/*
-	install -d $(CURDIR)/debian/$(PACKAGE)/$(libdir)
-	install -p $(COMPILED_BASE)/Lib/* $(SENSOR_BASE)/$(libdir)
-	install -d $(SENSOR_BASE)/$(bindir)
-	install -p $(COMPILED_BASE)/Bin/* $(SENSOR_BASE)/$(bindir)
-	chmod u+s $(SENSOR_BASE)/$(bindir)/XnSensorServer
-	install -d $(SENSOR_BASE)/var/log/primesense/XnSensorServer
-	install -d $(SENSOR_BASE)/$(usbruledir)
-	install -p $(COMPILED_BASE)/Install/*.rules $(SENSOR_BASE)/$(usbruledir)
-	chmod a-x $(SENSOR_BASE)/$(usbruledir)/*
-
-override_dh_fixperms:
-	dh_fixperms -XXnSensorServer
-
-override_dh_auto_clean:
-	dh_auto_clean
-	rm -rf -- $(CURDIR)/Platform/Linux-x86/CreateRedist/Final
-	rm -rf -- $(CURDIR)/Platform/Linux-x86/CreateRedist/Output
+override_dh_clean:
+	dh_clean -X Platform/Win32/CreateRedist/EE_NI/Includes/EENIVariables.wxi.bak
+	rm -rf -- Platform/Linux/Bin/
+	rm -rf -- Platform/Linux/Build/Utils/XnSensorServer/*-Release/
+	rm -rf -- Platform/Linux/Build/XnCore/*-Release/
+	rm -rf -- Platform/Linux/Build/XnDDK/*-Release/
+	rm -rf -- Platform/Linux/Build/XnDeviceFile/*-Release/
+	rm -rf -- Platform/Linux/Build/XnDeviceSensorV2/*-Release/
+	rm -rf -- Platform/Linux/Build/XnFormats/*-Release/
+	rm -rf -- Platform/Linux/CreateRedist/Final/
+	rm -rf -- Platform/Linux/Redist/
