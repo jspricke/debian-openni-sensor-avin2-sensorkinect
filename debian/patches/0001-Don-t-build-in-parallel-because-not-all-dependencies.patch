@@ -1,0 +1,21 @@
+From: Jochen Sprickerhof <jochen@sprickerhof.de>
+Date: Wed, 11 Jul 2012 16:10:16 +0200
+Subject: Don't build in parallel because not all dependencies are correct
+
+---
+ Platform/Linux/CreateRedist/RedistMaker |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Platform/Linux/CreateRedist/RedistMaker b/Platform/Linux/CreateRedist/RedistMaker
+index f812133..6093ed2 100755
+--- a/Platform/Linux/CreateRedist/RedistMaker
++++ b/Platform/Linux/CreateRedist/RedistMaker
+@@ -67,7 +67,7 @@ rm -rf ../$REDIST_DIR
+ # Build Engine
+ echo "Building..."
+ make -C ../Build clean > /dev/null
+-make -j$(calc_jobs_number) -C ../Build
++make -C ../Build
+ 
+ # create redist folder structure
+ echo "Creating redist folder..."
