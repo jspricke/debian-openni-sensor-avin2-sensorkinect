@@ -4,3 +4,4 @@
 0004-Don-t-write-log-file-upon-OpenNI-invocation.patch
 0005-Test-for-y-value-in-registration.patch
 0006-Add-SONAME-to-libraries.patch
+0007-Use-system-wide-libjpeg.patch
